@@ -52,21 +52,23 @@
     html.embed #status[hidden] { display: none; }
     html.embed .embed-link { display: inline; }
   </style>
+  <link rel="stylesheet" href="/touch-controls.css">
   <script>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('embed');</script>
   <script src="/vendor/ruffle/ruffle.js" defer></script>
   <script src="/app.js" defer></script>
+  <script src="/touch-controls.js"></script>
 </head>
 <body>
   <main>
     <header><h1>BENZIN</h1><span>RAMMSTEIN</span></header>
     <div class="game-layout">
     <div class="play-column">
-    <div id="game" aria-label="Benzin game"></div>
+    <div id="game" aria-label="Benzin game"><div id="game-screen"></div></div>
     <p id="status" role="status">Loading the game…</p>
     <noscript><p>JavaScript is required to run the game.</p></noscript>
     <div class="toolbar"><button id="fullscreen" type="button">Fullscreen</button><button id="restart" type="button">Restart game</button><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="70"><output id="volume-value" for="volume">70%</output><a class="embed-link" href="/" target="_blank" rel="noopener">Full game &amp; scores</a></div>
     <p>Click to enable sound, then choose <strong>PLAY</strong>. Use <strong>↑</strong> to accelerate, <strong>↓</strong> to brake, and <strong>← / →</strong> to steer. Cause as much damage as possible in 90 seconds!</p>
-    <p>A desktop keyboard is recommended. Set volume to 0 to mute.</p>
+    <p><button id="touch-toggle" type="button" aria-pressed="false">Touch controls</button> Hold the on-screen buttons to drive; steering and acceleration work together. Controls appear automatically on touch devices. Set volume to 0 to mute.</p>
     </div>
     <section class="leaderboard" aria-labelledby="leaderboard-title">
       <h2 id="leaderboard-title">Community leaderboard · All-time</h2>

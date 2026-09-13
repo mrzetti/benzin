@@ -6,6 +6,14 @@ URL: https://benzin.rammwiki.mrzetti.com
 game and emulator assets are included; rebuilding the SWF is optional.
 For the compact wiki embed, see [EMBED.md](EMBED.md).
 
+**Mobile controls:** touch devices automatically show Left, Right, Brake and
+Gas buttons below the playfield. Hold gas and a steering button together to
+drive. The toolbar's Touch controls toggle also enables them on desktop. They
+work in the compact embed and fullscreen, and release held input on touch
+cancellation, page hiding and restart. Browser/mobile-emulation verification:
+`BROWSER_PATH=/path/to/chrome node tests/browser/touch.cjs` (after installing
+the browser test dependencies). Physical phone performance can vary.
+
 Canonical project directory: `/root/repos/rammwiki/benzin`.
 
 ## Project layout

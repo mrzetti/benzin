@@ -1,6 +1,20 @@
 const container = document.getElementById('game');
 const status = document.getElementById('status');
 let player;
+const controls = createTouchControls({
+  host: container, toggle: document.getElementById('touch-toggle'),
+  keys: [['ArrowLeft', '← Left'], ['ArrowRight', 'Right →'], ['ArrowDown', '↓ Brake'], ['ArrowUp', '↑ Gas']],
+  send(code, down, keyboardButton) {
+    if (!player) return;
+    if (down && !keyboardButton) player.focus({preventScroll:true});
+    const keyCode = {ArrowLeft:37, ArrowUp:38, ArrowRight:39, ArrowDown:40}[code];
+    player.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', {
+      key:code, code, keyCode, which:keyCode, bubbles:true, cancelable:true,
+    }));
+  },
+});
+// Keep the toggle available in the compact view's toolbar too.
+document.querySelector('.toolbar').append(document.getElementById('touch-toggle'));
 const volume = document.getElementById('volume');
 function applyVolume() {
   document.getElementById('volume-value').value = `${volume.value}%`;
@@ -9,13 +23,14 @@ function applyVolume() {
 volume.addEventListener('input', applyVolume);
 
 async function startGame() {
+  controls.releaseAll();
   status.hidden = false;
   status.textContent = 'Loading the game…';
   try {
     const session = await fetch('/api/session', { method: 'POST' });
     if (!session.ok) throw new Error('Could not initialize player profile');
     player = window.RufflePlayer.newest().createPlayer();
-    container.replaceChildren(player);
+    document.getElementById('game-screen').replaceChildren(player);
     applyVolume();
     await player.ruffle().load({
       url: '/benzin-community-en-v2.swf',

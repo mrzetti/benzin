@@ -10,7 +10,9 @@ Compact view: https://benzin.rammwiki.mrzetti.com/?embed=1
 ```
 
 The view fits the iframe height and includes volume, fullscreen, restart and a
-link to the full site. The external leaderboard and article-style presentation
+link to the full site. Touch devices also get steering, brake and gas buttons
+below the playfield, with a toolbar toggle and simultaneous-touch support.
+The external leaderboard and article-style presentation
 are hidden. MediaWiki needs an administrator-configured widget or embedding
 extension; raw iframe markup is generally not accepted in article wikitext.
 
