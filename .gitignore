@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+node_modules/
+tests/browser/artifacts/
+*.sqlite3*
+.env
+.env.*
+*.pem
+*.key
+*.log

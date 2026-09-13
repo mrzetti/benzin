@@ -1,0 +1,6 @@
+{
+  "name": "benzin-browser-verification",
+  "private": true,
+  "scripts": { "test": "node gameplay.cjs" },
+  "devDependencies": { "playwright": "1.63.0" }
+}

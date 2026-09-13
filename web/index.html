@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Play the original Rammstein Benzin game in your browser, powered by Ruffle.">
+  <title>Benzin — Rammstein browser game</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #121212; color: #eee; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; border-top: 4px solid #bd3928; }
+    main { max-width: 860px; margin: auto; padding: 30px 18px; }
+    header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+    h1 { margin: 0; font-size: clamp(2rem, 6vw, 3rem); letter-spacing: .12em; }
+    header span { color: #aaa; font-size: .85rem; letter-spacing: .15em; }
+    #game { width: 100%; aspect-ratio: 4 / 3; background: #000; box-shadow: 0 12px 50px #0008; }
+    ruffle-player { display: block; width: 100%; height: 100%; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 18px 0; }
+    .play-column, .leaderboard { min-width: 0; }
+    td { overflow-wrap: anywhere; }
+    @media (min-width: 1180px) {
+      main { max-width: 1380px; }
+      .game-layout { display: grid; grid-template-columns: minmax(0, 824px) minmax(300px, 1fr); gap: 30px; align-items: start; }
+      .leaderboard { margin-top: 0; padding-top: 0; border-top: 0; max-height: 850px; overflow: auto; }
+      .leaderboard h2 { margin-top: 0; }
+    }
+    button { font: inherit; color: #eee; background: #292929; border: 1px solid #555; border-radius: 4px; padding: 9px 16px; cursor: pointer; }
+    button:hover { background: #393939; }
+    button:focus-visible, a:focus-visible { outline: 2px solid #ed8b53; outline-offset: 4px; }
+    p, footer { color: #aaa; font-size: .9rem; line-height: 1.6; }
+    a { color: #eaaa80; }
+    #status { color: #eaaa80; }
+    section { margin: 28px 0; padding-top: 12px; border-top: 1px solid #333; }
+    h2 { font-size: 1.3rem; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    td, th { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
+    td:last-child, th:last-child { text-align: right; }
+    #game:fullscreen { width: 100vw; height: 100vh; }
+    .embed-link { display: none; }
+    html.embed body { border: 0; }
+    html.embed main { max-width: none; padding: 0; height: 100vh; height: 100dvh; }
+    html.embed header, html.embed footer, html.embed .leaderboard,
+    html.embed .play-column > p:not(#status) { display: none; }
+    html.embed .game-layout { display: block; height: 100%; }
+    html.embed .play-column { display: flex; flex-direction: column; height: 100%; }
+    html.embed #game { flex: 1; min-height: 0; aspect-ratio: auto; box-shadow: none; }
+    html.embed .toolbar { flex: none; margin: 0; padding: 10px; gap: 8px; font-size: .85rem; }
+    html.embed .toolbar button { padding: 6px 10px; }
+    html.embed #volume { width: 90px; min-width: 0; }
+    html.embed #status { margin: 0; padding: 6px 10px; }
+    html.embed #status[hidden] { display: none; }
+    html.embed .embed-link { display: inline; }
+  </style>
+  <script>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('embed');</script>
+  <script src="/vendor/ruffle/ruffle.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><h1>BENZIN</h1><span>RAMMSTEIN</span></header>
+    <div class="game-layout">
+    <div class="play-column">
+    <div id="game" aria-label="Benzin game"></div>
+    <p id="status" role="status">Loading the game…</p>
+    <noscript><p>JavaScript is required to run the game.</p></noscript>
+    <div class="toolbar"><button id="fullscreen" type="button">Fullscreen</button><button id="restart" type="button">Restart game</button><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="70"><output id="volume-value" for="volume">70%</output><a class="embed-link" href="/" target="_blank" rel="noopener">Full game &amp; scores</a></div>
+    <p>Click to enable sound, then choose <strong>PLAY</strong>. Use <strong>↑</strong> to accelerate, <strong>↓</strong> to brake, and <strong>← / →</strong> to steer. Cause as much damage as possible in 90 seconds!</p>
+    <p>A desktop keyboard is recommended. Set volume to 0 to mute.</p>
+    </div>
+    <section class="leaderboard" aria-labelledby="leaderboard-title">
+      <h2 id="leaderboard-title">Community leaderboard · All-time</h2>
+      <p>Finish a 90-second round, choose <strong>SAVE YOUR SCORE</strong>, then enter a nickname to submit your score. Your personal best also appears in the game’s <strong>HISCORES</strong> menu. Highest score wins; earlier submissions break ties.</p>
+      <p>Your player profile is remembered in this browser using a cookie. Keep using the same browser to improve your entry; clearing cookies loses access to that profile. No email or signup required.</p>
+      <button id="refresh-scores" type="button">Refresh scores</button>
+      <p id="scores-status" role="status">Loading scores…</p>
+      <table><thead><tr><th scope="col">Rank</th><th scope="col">Player</th><th scope="col">Best score</th></tr></thead><tbody id="scores"></tbody></table>
+    </section>
+    </div>
+    <footer>Original game from <a href="https://www.rammsteinworld.com/en/multimedia/downloads">Rammstein World</a> · Runs with <a href="https://ruffle.rs/">Ruffle</a>, no Flash plugin required.<br>Fan-hosted preservation with a new community high-score competition. Game rights belong to their respective owners. The original promotional competition, email and newsletter services are retired.</footer>
+  </main>
+</body>
+</html>
